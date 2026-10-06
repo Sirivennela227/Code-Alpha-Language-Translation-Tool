@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Language Translation Tool | CodeAlpha AI Internship</title>
+    <!-- Meta tags for SEO & Project Submission -->
+    <meta name="description" content="A professional, web-based language translation tool built for CodeAlpha AI Internship Task 1 using HTML, CSS, and JavaScript.">
+    <meta name="author" content="CodeAlpha Intern">
+    
+    <!-- Google Fonts & Font Awesome Icons -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Header Section -->
+        <header class="app-header">
+            <div class="badge-container">
+                <span class="internship-badge">
+                    <i class="fa-solid fa-graduation-cap"></i> CodeAlpha AI Internship &bull; Task 1
+                </span>
+            </div>
+            <h1 class="app-title">
+                <i class="fa-solid fa-language icon-gradient"></i> AI Language Translation Tool
+            </h1>
+            <p class="app-subtitle">Translate text seamlessly across 15+ global & Indian languages in real time</p>
+        </header>
+
+        <!-- Quick Preset Prompts -->
+        <div class="quick-samples">
+            <span class="samples-label"><i class="fa-solid fa-bolt"></i> Quick Try:</span>
+            <button class="sample-btn" data-sample="Hello! Welcome to the CodeAlpha AI Internship program.">"Hello! Welcome to CodeAlpha"</button>
+            <button class="sample-btn" data-sample="Artificial Intelligence is transforming how we communicate globally.">"AI is transforming communication"</button>
+            <button class="sample-btn" data-sample="Thank you for reviewing my internship project submission.">"Thank you for reviewing my project"</button>
+        </div>
+
+        <!-- Main Translation Workspace -->
+        <main class="translator-card">
+            
+            <!-- Source Panel -->
+            <div class="translation-panel source-panel">
+                <div class="panel-header">
+                    <label for="sourceLanguageSelect" class="panel-label">
+                        <i class="fa-solid fa-globe"></i> Source Language
+                    </label>
+                    <select id="sourceLanguageSelect" class="lang-select">
+                        <option value="auto" selected>Detect Language (Auto)</option>
+                        <option value="en">English</option>
+                        <option value="te">Telugu</option>
+                        <option value="hi">Hindi</option>
+                        <option value="ta">Tamil</option>
+                        <option value="kn">Kannada</option>
+                        <option value="ml">Malayalam</option>
+                        <option value="bn">Bengali</option>
+                        <option value="mr">Marathi</option>
+                        <option value="gu">Gujarati</option>
+                        <option value="es">Spanish</option>
+                        <option value="fr">French</option>
+                        <option value="de">German</option>
+                        <option value="ja">Japanese</option>
+                        <option value="ko">Korean</option>
+                        <option value="zh">Chinese</option>
+                        <option value="ar">Arabic</option>
+                    </select>
+                </div>
+
+                <div class="textarea-wrapper">
+                    <textarea id="sourceText" placeholder="Enter text to translate here..." maxlength="5000" rows="6"></textarea>
+                    <button type="button" id="clearTextBtn" class="floating-icon-btn hidden" title="Clear Text">
+                        <i class="fa-solid fa-xmark"></i>
+                    </button>
+                </div>
+
+                <div class="panel-footer">
+                    <div class="panel-tools">
+                        <button type="button" id="pasteBtn" class="tool-btn" title="Paste from Clipboard">
+                            <i class="fa-regular fa-paste"></i> <span>Paste</span>
+                        </button>
+                        <button type="button" id="listenSourceBtn" class="tool-btn" title="Listen Input Audio">
+                            <i class="fa-solid fa-volume-high"></i> <span>Listen</span>
+                        </button>
+                    </div>
+                    <div class="char-counter">
+                        <span id="sourceCharCount">0</span> / 5000
+                    </div>
+                </div>
+            </div>
+
+            <!-- Swap Button Divider -->
+            <div class="swap-divider">
+                <button type="button" id="swapLangBtn" class="swap-btn" title="Swap Source and Target Languages">
+                    <i class="fa-solid fa-arrow-right-arrow-left"></i>
+                </button>
+            </div>
+
+            <!-- Target Panel -->
+            <div class="translation-panel target-panel">
+                <div class="panel-header">
+                    <label for="targetLanguageSelect" class="panel-label">
+                        <i class="fa-solid fa-language"></i> Target Language
+                    </label>
+                    <select id="targetLanguageSelect" class="lang-select">
+                        <option value="te" selected>Telugu</option>
+                        <option value="en">English</option>
+                        <option value="hi">Hindi</option>
+                        <option value="ta">Tamil</option>
+                        <option value="kn">Kannada</option>
+                        <option value="ml">Malayalam</option>
+                        <option value="bn">Bengali</option>
+                        <option value="mr">Marathi</option>
+                        <option value="gu">Gujarati</option>
+                        <option value="es">Spanish</option>
+                        <option value="fr">French</option>
+                        <option value="de">German</option>
+                        <option value="ja">Japanese</option>
+                        <option value="ko">Korean</option>
+                        <option value="zh">Chinese</option>
+                        <option value="ar">Arabic</option>
+                    </select>
+                </div>
+
+                <div class="textarea-wrapper">
+                    <textarea id="targetText" placeholder="Translation will appear here automatically or after clicking Translate..." readonly rows="6"></textarea>
+                    
+                    <!-- Loading Overlay -->
+                    <div id="loadingOverlay" class="loading-overlay hidden">
+                        <div class="spinner"></div>
+                        <span class="loading-text">Translating...</span>
+                    </div>
+                </div>
+
+                <div class="panel-footer">
+                    <div class="panel-tools">
+                        <button type="button" id="copyTargetBtn" class="tool-btn" title="Copy Translation">
+                            <i class="fa-regular fa-copy"></i> <span id="copyBtnText">Copy</span>
+                        </button>
+                        <button type="button" id="listenTargetBtn" class="tool-btn" title="Listen Translation Audio">
+                            <i class="fa-solid fa-volume-high"></i> <span>Listen</span>
+                        </button>
+                    </div>
+                    <div id="detectedLangTag" class="detected-tag hidden">
+                        Detected: <strong id="detectedLangName">-</strong>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Main Action Bar -->
+        <div class="action-bar">
+            <button type="button" id="translateBtn" class="primary-btn">
+                <i class="fa-solid fa-wand-magic-sparkles"></i> Translate Now
+            </button>
+            <button type="button" id="resetAllBtn" class="secondary-btn">
+                <i class="fa-solid fa-rotate-right"></i> Reset All
+            </button>
+        </div>
+
+        <!-- Notification Toast -->
+        <div id="toast" class="toast hidden">
+            <i id="toastIcon" class="fa-solid fa-circle-check"></i>
+            <span id="toastMessage">Text copied to clipboard!</span>
+        </div>
+
+        <!-- Project Footer -->
+        <footer class="app-footer">
+            <p>Developed for <strong>CodeAlpha AI Internship</strong> &bull; Free & Open-Source Language Translation Tool</p>
+        </footer>
+    </div>
+
+    <!-- JavaScript Script -->
+    <script src="script.js"></script>
+</body>
+</html>
